@@ -1,6 +1,6 @@
 {
     "name": "node-uci-engine",
-    "version": "1.0.0",
+    "version": "1.3.0",
     "description": "Library for automating analysis with UCI-compatible chess engines",
     "homepage": "https://github.com/tegenterter/node-uci-engine#readme",
     "author": "Thibaut Vandenbussche <thibaut@vandenbussche.co>",
