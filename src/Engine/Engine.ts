@@ -28,7 +28,7 @@ export class Engine {
      * @protected
      * @type {boolean}
      */
-    protected isStarted: boolean;
+    protected isActive: boolean;
 
     /**
      * @constructor
@@ -37,7 +37,7 @@ export class Engine {
     constructor(path: string) {
         this.process = new Process(path);
         this.handler = new Handler();
-        this.isStarted = false;
+        this.isActive = false;
 
         this.process.listen((output: string) => {
             this.handler.handle(output);
@@ -67,13 +67,13 @@ export class Engine {
             this.stop();
 
             if (lastAnalysis !== undefined) {
-                const result = new Result(position, resolution, lastAnalysis);
-
-                callback(result);
+                callback(new Result(position, resolution, lastAnalysis));
             }
         });
 
         this.start((): void => {
+            this.isActive = true;
+
             this.process.execute(position.getInput());
             this.process.execute(`go ${resolution.getInput()}`);
         });
@@ -95,11 +95,22 @@ export class Engine {
     /**
      * @protected
      * @method
+     * @return {void}
+     */
+    public quit(): void {
+        this.isActive = false;
+
+        this.process.execute("quit");
+    }
+
+    /**
+     * @protected
+     * @method
      * @param {Function} callback
      * @return {void}
      */
     protected start(callback: () => void): void {
-        if (this.isStarted) {
+        if (this.isActive) {
             callback();
         } else {
             this.process.execute("uci");
@@ -114,6 +125,6 @@ export class Engine {
      * @return {void}
      */
     protected stop(): void {
-        this.process.execute("quit");
+        this.process.execute("stop");
     }
 }
