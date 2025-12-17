@@ -18,6 +18,7 @@ describe("Analysis", (): void => {
             position,
             resolution,
             (result: Result): void => {
+                engine.quit();
                 expect(engine.isActive()).to.eq(false);
 
                 expect(result.getResolution().getProperty()).to.eq("depth");
@@ -40,6 +41,7 @@ describe("Analysis", (): void => {
             position,
             resolution,
             (result: Result): void => {
+                engine.quit();
                 expect(engine.isActive()).to.eq(false);
 
                 expect(result.getResolution().getProperty()).to.eq("depth");
