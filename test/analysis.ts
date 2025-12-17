@@ -9,7 +9,7 @@ describe("Analysis", (): void => {
     const resolution = new DepthResolution(20);
 
     it("Should find the best move Bd5 at the requested depth with the correct evaluation", (done: Function): void => {
-        const engine = new Engine("./engine/stockfish_20090216_x64");
+        const engine = new Engine("./engine/stockfish-windows-x86-64-avx2");
         const position = new Position("r1bqkb1r/5ppp/p2ppn2/1pn5/3NP3/1BN5/PPP2PPP/R1BQR1K1 w kq - 0 1");
 
         engine.analyzePosition(
@@ -28,7 +28,7 @@ describe("Analysis", (): void => {
     });
 
     it("Should find the best move Qg3 at the requested depth with the correct evaluation", (done: Function): void => {
-        const engine = new Engine("./engine/stockfish_20090216_x64");
+        const engine = new Engine("./engine/stockfish-windows-x86-64-avx2");
         const position = new Position("5rk1/pp4pp/4p3/2R3Q1/3n4/2q4r/P1P2PPP/5RK1 b - - 0 1");
 
         engine.analyzePosition(
