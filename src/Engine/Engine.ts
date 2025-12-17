@@ -28,7 +28,7 @@ export class Engine {
      * @protected
      * @type {boolean}
      */
-    protected isActive: boolean;
+    protected active: boolean;
 
     /**
      * @constructor
@@ -37,11 +37,20 @@ export class Engine {
     constructor(path: string) {
         this.process = new Process(path);
         this.handler = new Handler();
-        this.isActive = false;
+        this.active = false;
 
         this.process.listen((output: string) => {
             this.handler.handle(output);
         });
+    }
+
+    /**
+     * @public
+     * @method
+     * @return {boolean}
+     */
+    public isActive(): boolean {
+        return this.active;
     }
 
     /**
@@ -72,7 +81,7 @@ export class Engine {
         });
 
         this.start((): void => {
-            this.isActive = true;
+            this.active = true;
 
             this.process.execute(position.getInput());
             this.process.execute(`go ${resolution.getInput()}`);
@@ -98,7 +107,7 @@ export class Engine {
      * @return {void}
      */
     public quit(): void {
-        this.isActive = false;
+        this.active = false;
 
         this.process.execute("quit");
     }
@@ -110,7 +119,7 @@ export class Engine {
      * @return {void}
      */
     protected start(callback: () => void): void {
-        if (this.isActive) {
+        if (this.isActive()) {
             callback();
         } else {
             this.process.execute("uci");
@@ -125,6 +134,8 @@ export class Engine {
      * @return {void}
      */
     protected stop(): void {
+        this.active = false;
+
         this.process.execute("stop");
     }
 }
